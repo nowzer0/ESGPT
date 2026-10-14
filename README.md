@@ -1,4 +1,3 @@
-
 # ESGPT
 
 **Official repository for our EMNLP 2026 Main Conference paper:**
@@ -32,8 +31,7 @@ The figure below compares the overall accuracy of different language models on E
 Install the evaluation dependencies:
 
 ```bash
-python -m pip install -r requirements.txt
-python -m pip install torch
+python -m pip install -r requirements.txt datasets torch
 ```
 
 ### Load ESGPT
@@ -70,11 +68,32 @@ esgu_bench = load_dataset("nowzero/ESGU-Bench")
 
 ## ESGU-Bench Evaluation
 
-This repository provides the official ESGU-Bench evaluation implementation, including prompt construction, model inference, answer normalization, task-specific scoring, and result aggregation. The code is available in `esgpt/`.
+This repository provides the official ESGU-Bench scoring code. It does not load or run a model; generate predictions with any model and evaluate them using `evaluate.py`.
 
-For standard ESGU-Bench tasks, evaluation uses the released `messages` field after removing the final assistant reference. ESGenius records use the original benchmark prompt template. These prompt paths are unchanged from the experiment code.
+Download the benchmark:
 
-This repository contains evaluation code only and does not include training code, model weights, or dataset records.
+```bash
+hf download nowzero/ESGU-Bench esgu_bench.jsonl --repo-type dataset --local-dir .
+```
+
+Prepare one JSON object per line in `predictions.jsonl`:
+
+```json
+{"sample_id": "benchmark_full_00000000", "prediction": "model output"}
+```
+
+Run evaluation:
+
+```bash
+python evaluate.py \
+  --benchmark-file esgu_bench.jsonl \
+  --predictions-file predictions.jsonl \
+  --output-dir evaluation_results
+```
+
+Each benchmark `sample_id` must appear exactly once. The output directory contains an evaluation summary and task- and category-level results. Prompt construction, answer normalization, and task-specific scoring are implemented in `esgpt/` and remain unchanged from the experiment code.
+
+This repository does not include training code, model weights, or dataset records.
 
 ## License
 
