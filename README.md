@@ -1,14 +1,14 @@
 
 # ESGPT
 
-[![Conference](https://img.shields.io/badge/EMNLP-2026%20Main-blue)](https://2026.emnlp.org/)
-[![Model](https://img.shields.io/badge/🤗%20Hugging%20Face-Model-yellow)](https://huggingface.co/nowzero/ESGPT)
-[![Datasets](https://img.shields.io/badge/🤗%20Hugging%20Face-Datasets-yellow)](https://huggingface.co/datasets/nowzero/ESGU-Bench)
+[![Paper](https://img.shields.io/badge/Paper-EMNLP%202026-blue)](PAPER_URL)
+[![Model](https://img.shields.io/badge/Hugging%20Face-Model-yellow?logo=huggingface)](https://huggingface.co/nowzero/ESGPT)
+[![Datasets](https://img.shields.io/badge/Hugging%20Face-Datasets-yellow?logo=huggingface)](https://huggingface.co/datasets/nowzero/ESGU-Bench)
 [![License](https://img.shields.io/badge/License-Apache%202.0-green)](LICENSE)
 
-**Official repository for our EMNLP 2026 Main Conference paper:**
-
 **ESGPT: A Data-Centric ESG Language Model with Unified Instruction and Benchmark Resources**
+
+Official repository for our paper accepted at **EMNLP 2026 (Main Conference)**.
 
 ESGPT provides unified resources for advancing and evaluating large language models in the Environmental, Social, and Governance (ESG) domain. The project introduces an ESG-specialized language model, an instruction-tuning dataset, and a comprehensive ESG understanding benchmark.
 
