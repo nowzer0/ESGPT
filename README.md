@@ -16,7 +16,6 @@ The following resources are available on Hugging Face:
 | **ESGPT** | An 8B ESG-specialized language model based on Qwen3-8B. | [Model](https://huggingface.co/nowzero/ESGPT) |
 | **ESG-Instruct** | 30K instruction examples covering 35 instruction tasks and general instruction data. | [Dataset](https://huggingface.co/datasets/nowzero/ESG-Instruct) |
 | **ESGU-Bench** | 9,514 evaluation examples across 21 tasks and six ESG understanding areas. | [Dataset](https://huggingface.co/datasets/nowzero/ESGU-Bench) |
-| **ESG-EN** | Additional ESG dataset resource. | [Dataset](https://huggingface.co/datasets/nowzero/ESG-EN) |
 
 ## Model Performance
 
@@ -67,9 +66,6 @@ esg_instruct = load_dataset("nowzero/ESG-Instruct")
 
 # ESGU-Bench
 esgu_bench = load_dataset("nowzero/ESGU-Bench")
-
-# ESG-EN
-esg_en = load_dataset("nowzero/ESG-EN")
 ```
 
 ## ESGU-Bench Evaluation
@@ -87,7 +83,6 @@ The resources are distributed under their respective licenses, subject to applic
 - **ESGPT:** See the Hugging Face model repository.
 - **ESG-Instruct:** See the Hugging Face dataset repository.
 - **ESGU-Bench:** See the Hugging Face dataset repository.
-- **ESG-EN:** See the Hugging Face dataset repository.
 - **Evaluation Code:** Apache License 2.0.
 
 ## Citation
