@@ -1,4 +1,10 @@
+
 # ESGPT
+
+[![Conference](https://img.shields.io/badge/EMNLP-2026%20Main-blue)](https://2026.emnlp.org/)
+[![Model](https://img.shields.io/badge/🤗%20Hugging%20Face-Model-yellow)](https://huggingface.co/nowzero/ESGPT)
+[![Datasets](https://img.shields.io/badge/🤗%20Hugging%20Face-Datasets-yellow)](https://huggingface.co/datasets/nowzero/ESGU-Bench)
+[![License](https://img.shields.io/badge/License-Apache%202.0-green)](LICENSE)
 
 **Official repository for our EMNLP 2026 Main Conference paper:**
 
@@ -6,17 +12,19 @@
 
 ESGPT provides unified resources for advancing and evaluating large language models in the Environmental, Social, and Governance (ESG) domain. The project introduces an ESG-specialized language model, an instruction-tuning dataset, and a comprehensive ESG understanding benchmark.
 
-## Resources
+This repository provides links to the released resources and the official **ESGU-Bench evaluation code**.
+
+## 📦 Resources
 
 The following resources are available on Hugging Face:
 
 | Resource | Description | Hugging Face |
 |---|---|---|
-| **ESGPT** | ESG-specialized language model based on Qwen3-8B. | [Model](https://huggingface.co/nowzero/ESGPT) |
-| **ESG-Instruct** | 30K instruction examples covering 35 instruction tasks and general instruction data. | [Dataset](https://huggingface.co/datasets/nowzero/ESG-Instruct) |
-| **ESGU-Bench** | 9,514 evaluation examples across 21 tasks and six ESG understanding areas. | [Dataset](https://huggingface.co/datasets/nowzero/ESGU-Bench) |
+| **ESGPT** | ESG-specialized language model based on Qwen3-8B. | [🤗 Model](https://huggingface.co/nowzero/ESGPT) |
+| **ESG-Instruct** | 30K instruction examples covering 35 instruction tasks and general instruction data. | [🤗 Dataset](https://huggingface.co/datasets/nowzero/ESG-Instruct) |
+| **ESGU-Bench** | 9,514 evaluation examples across 21 tasks and six ESG understanding areas. | [🤗 Dataset](https://huggingface.co/datasets/nowzero/ESGU-Bench) |
 
-## Model Performance
+## 📊 Model Performance
 
 The figure below compares the overall accuracy of different language models on ESGU-Bench with respect to model size.
 
@@ -24,7 +32,7 @@ The figure below compares the overall accuracy of different language models on E
 
 ![Model Performance](assets/model_performance.png)
 
-## Quick Start
+## 🚀 Quick Start
 
 ### Installation
 
@@ -66,15 +74,17 @@ esg_instruct = load_dataset("nowzero/ESG-Instruct")
 esgu_bench = load_dataset("nowzero/ESGU-Bench")
 ```
 
-## ESGU-Bench Evaluation
+## 🧪 ESGU-Bench Evaluation
 
 This repository provides the official ESGU-Bench scoring code. It does not load or run a model; generate predictions with any model and evaluate them using `evaluate.py`.
 
-Download the benchmark:
+### Download Benchmark
 
 ```bash
 hf download nowzero/ESGU-Bench esgu_bench.jsonl --repo-type dataset --local-dir .
 ```
+
+### Prepare Predictions
 
 Prepare one JSON object per line in `predictions.jsonl`:
 
@@ -82,7 +92,9 @@ Prepare one JSON object per line in `predictions.jsonl`:
 {"sample_id": "benchmark_full_00000000", "prediction": "model output"}
 ```
 
-Run evaluation:
+Each benchmark `sample_id` must appear exactly once.
+
+### Run Evaluation
 
 ```bash
 python evaluate.py \
@@ -91,20 +103,22 @@ python evaluate.py \
   --output-dir evaluation_results
 ```
 
-Each benchmark `sample_id` must appear exactly once. The output directory contains an evaluation summary and task- and category-level results. Prompt construction, answer normalization, and task-specific scoring are implemented in `esgpt/` and remain unchanged from the experiment code.
+The output directory contains an evaluation summary and task- and category-level results.
+
+Prompt construction, answer normalization, and task-specific scoring are implemented in `esgpt/` and remain unchanged from the experiment code.
 
 This repository does not include training code, model weights, or dataset records.
 
-## License
+## 📄 License
 
 The resources are distributed under their respective licenses, subject to applicable third-party terms.
 
-- **ESGPT:** See the Hugging Face model repository.
-- **ESG-Instruct:** See the Hugging Face dataset repository.
-- **ESGU-Bench:** See the Hugging Face dataset repository.
+- **ESGPT:** See the [Hugging Face model repository](https://huggingface.co/nowzero/ESGPT).
+- **ESG-Instruct:** See the [Hugging Face dataset repository](https://huggingface.co/datasets/nowzero/ESG-Instruct).
+- **ESGU-Bench:** See the [Hugging Face dataset repository](https://huggingface.co/datasets/nowzero/ESGU-Bench).
 - **Evaluation Code:** Apache License 2.0.
 
-## Citation
+## 📝 Citation
 
 If you use ESGPT, ESG-Instruct, ESGU-Bench, or the associated evaluation resources, please cite our paper:
 
@@ -117,4 +131,3 @@ If you use ESGPT, ESG-Instruct, ESGU-Bench, or the associated evaluation resourc
   publisher = {Association for Computational Linguistics}
 }
 ```
-
