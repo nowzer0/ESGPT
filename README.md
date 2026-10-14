@@ -30,10 +30,11 @@ The figure below compares the overall accuracy of different language models on E
 
 ### Installation
 
-Install the required libraries:
+Install the evaluation dependencies:
 
 ```bash
-pip install -U transformers datasets accelerate torch
+python -m pip install -r requirements.txt
+python -m pip install torch
 ```
 
 ### Load ESGPT
@@ -73,19 +74,11 @@ esg_en = load_dataset("nowzero/ESG-EN")
 
 ## ESGU-Bench Evaluation
 
-This repository is dedicated to providing the official evaluation protocol for ESGU-Bench.
+This repository provides the official ESGU-Bench evaluation implementation, including prompt construction, model inference, answer normalization, task-specific scoring, and result aggregation. The code is available in `esgpt/`.
 
-The evaluation toolkit will include:
+For standard ESGU-Bench tasks, evaluation uses the released `messages` field after removing the final assistant reference. ESGenius records use the original benchmark prompt template. These prompt paths are unchanged from the experiment code.
 
-- Task-specific evaluation prompts
-- Model inference scripts
-- Answer normalization and scoring procedures
-- Evaluation configurations
-- Result aggregation scripts
-
-**Note:** This repository focuses on ESGU-Bench evaluation and reproducibility. ESGPT training code is not included.
-
-Evaluation scripts and detailed instructions will be provided in a future update.
+This repository contains evaluation code only and does not include training code, model weights, or dataset records.
 
 ## License
 
@@ -95,7 +88,7 @@ The resources are distributed under their respective licenses, subject to applic
 - **ESG-Instruct:** See the Hugging Face dataset repository.
 - **ESGU-Bench:** See the Hugging Face dataset repository.
 - **ESG-EN:** See the Hugging Face dataset repository.
-- **Evaluation Code:** Apache License 2.0 (planned).
+- **Evaluation Code:** Apache License 2.0.
 
 ## Citation
 
@@ -104,7 +97,7 @@ If you use ESGPT, ESG-Instruct, ESGU-Bench, or the associated evaluation resourc
 ```bibtex
 @inproceedings{lee2026esgpt,
   title     = {{ESGPT}: A Data-Centric {ESG} Language Model with Unified Instruction and Benchmark Resources},
-  author    = {Lee, Jaeyoung and others},
+  author    = {Lee, Jaeyoung and Kim, Misuk},
   booktitle = {Proceedings of the 2026 Conference on Empirical Methods in Natural Language Processing},
   year      = {2026},
   publisher = {Association for Computational Linguistics}
