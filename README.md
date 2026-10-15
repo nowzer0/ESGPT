@@ -12,11 +12,15 @@ Official repository for our paper accepted at **EMNLP 2026 (Main Conference)**.
 
 ESGPT provides unified resources for advancing and evaluating large language models in the Environmental, Social, and Governance (ESG) domain. The project introduces an ESG-specialized language model, an instruction-tuning dataset, and a comprehensive ESG understanding benchmark.
 
-This repository provides links to the released resources and the official **ESGU-Bench evaluation code**.
+This repository provides the official **ESGU-Bench evaluation code** and information about the accompanying resources.
+
+## Availability
+
+The ESGPT model and the ESG-Instruct and ESGU-Bench datasets will be publicly released on Hugging Face after the paper presentation. The Hugging Face repositories will remain private until then.
 
 ## 📦 Resources
 
-The following resources are available on Hugging Face:
+The following resources will be released on Hugging Face after the paper presentation:
 
 | Resource | Description | Hugging Face |
 |---|---|---|
@@ -33,6 +37,8 @@ The figure below compares the overall accuracy of different language models on E
 ![Model Performance](assets/model_performance.png)
 
 ## 🚀 Quick Start
+
+The commands below will work after the public release. Users with authorized access to the private Hugging Face repositories can use them before then.
 
 ### Installation
 
@@ -105,7 +111,7 @@ python evaluate.py \
 
 The output directory contains an evaluation summary and task- and category-level results.
 
-Prompt construction, answer normalization, and task-specific scoring are implemented in `esgpt/`. ESGenius records follow the same unified `messages` schema as the other tasks, but the original ESGenius prompt is not stored verbatim. To preserve its original evaluation protocol, the evaluation code extracts the question and options from the user message, excludes the additional `Context` section, and reconstructs the original context-free multiple-choice prompt during inference.
+Prompt construction, answer normalization, and task-specific scoring are implemented in `esgpt/`. The released benchmark normalizes examples from the source datasets into a unified `messages` schema rather than reproducing their original records verbatim. For the ESG question-answering task, the evaluation code extracts the question and options from the unified user message and excludes the added `Context` section, matching the context-free multiple-choice setup used in our experiments.
 
 This repository does not include training code, model weights, or dataset records.
 
