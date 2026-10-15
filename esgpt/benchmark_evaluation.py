@@ -244,7 +244,10 @@ def classification_gold_label(record: Dict[str, Any]) -> str:
     detected_label = record.get("detected_label")
     if detected_label not in (None, "", "__unknown_label__"):
         return normalize_classification_label(detected_label, task_name=task_name)
-    return normalize_classification_label(extract_assistant_answer_text(record), task_name=task_name)
+    return normalize_classification_label(
+        parse_prediction_label(extract_assistant_answer_text(record)),
+        task_name=task_name,
+    )
 
 
 def record_task_key(record: Dict[str, Any]) -> str:
@@ -865,22 +868,47 @@ def is_climate_finance_bench_record(record: Dict[str, Any]) -> bool:
 def build_esgenius_original_prompt(record: Dict[str, Any]) -> str:
     question = str(record.get("question") or record.get("query") or "").strip()
     options = record.get("options")
+
+    # The public ESGU-Bench schema keeps ESGenius examples in the unified
+    # messages field. Recover the structured question and options so we can
+    # retain ESGenius's original context-free multiple-choice protocol without
+    # publishing duplicate question/options columns.
+    if not question or not isinstance(options, dict):
+        user_content = first_message_content(record, "user")
+        match = re.match(
+            r"(?s)(.*?)\n\nOptions:\s*\n(.*?)(?:\n\nContext:|\Z)",
+            user_content,
+        )
+        if match:
+            if not question:
+                question = match.group(1).strip()
+                if question.startswith("Question:"):
+                    question = question[len("Question:") :].strip()
+            if not isinstance(options, dict):
+                try:
+                    parsed_options = ast.literal_eval(match.group(2).strip())
+                except (SyntaxError, ValueError):
+                    parsed_options = None
+                if isinstance(parsed_options, dict):
+                    options = parsed_options
+
+    if not question:
+        raise ValueError("Could not recover the ESGenius question from the benchmark record.")
+
     prompt = (
         "You are an expert in ESG (Environmental, Social, Governance) and Sustainability related topics. "
         "Answer the question with a single letter based on authoritative knowledge. Each option content is case-sensitive.\n\n"
     )
     prompt += f"Question: {question}\n"
     prompt += "Options:\n"
-    if isinstance(options, dict):
-        for option in ["A", "B", "C", "D", "Z"]:
-            option_text = options.get(option)
-            if option_text not in (None, ""):
-                prompt += f"{option}: {option_text}\n"
-    else:
-        for option in ["A", "B", "C", "D", "Z"]:
-            option_text = record.get(option)
-            if option_text not in (None, ""):
-                prompt += f"{option}: {option_text}\n"
+    option_lines = []
+    for option in ["A", "B", "C", "D", "Z"]:
+        option_text = options.get(option) if isinstance(options, dict) else record.get(option)
+        if option_text not in (None, ""):
+            option_lines.append(f"{option}: {option_text}")
+    if not option_lines:
+        raise ValueError("Could not recover the ESGenius options from the benchmark record.")
+    prompt += "\n".join(option_lines) + "\n"
     prompt += "\nAnswer:"
     return prompt
 

@@ -105,7 +105,7 @@ python evaluate.py \
 
 The output directory contains an evaluation summary and task- and category-level results.
 
-Prompt construction, answer normalization, and task-specific scoring are implemented in `esgpt/` and remain unchanged from the experiment code.
+Prompt construction, answer normalization, and task-specific scoring are implemented in `esgpt/`. ESGenius records follow the same unified `messages` schema as the other tasks, but the original ESGenius prompt is not stored verbatim. To preserve its original evaluation protocol, the evaluation code extracts the question and options from the user message, excludes the additional `Context` section, and reconstructs the original context-free multiple-choice prompt during inference.
 
 This repository does not include training code, model weights, or dataset records.
 
